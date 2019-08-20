@@ -163,6 +163,10 @@ jobs:
         #- $ChocolateyToolsLocation/msys64/msys2_shell.cmd --no-start -c "pacman --version"
         #- $ChocolateyToolsLocation/msys64/msys2_shell.cmd --no-start -c pacman --version
         #- $ChocolateyToolsLocation/msys64/msys2_shell.cmd --no-start -c "pacman -S boost"
+        - pushd /c/tools/msys64
+        - usr/bin/bash -l -c "pacman --version"
+        - popd
+        - /c/tools/msys64/usr/bin/bash -l -c "pacman --version"
         - $ChocolateyToolsLocation/msys64/usr/bin/bash -l -c "pacman --version"
       script:
         - mkdir -p build && cd build
