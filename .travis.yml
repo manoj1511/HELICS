@@ -146,22 +146,27 @@ jobs:
         - JOB_OPTION_FLAGS="-DBUILD_HELICS_BOOST_TESTS=OFF"
 
     - os: windows
-      name: "MinGW"
-      if: (branch = develop AND type IN (cron)) OR (branch = master AND type IN (push, pull_request)) OR (branch =~ /(mingw)/) OR (commit_message =~ /(mingw)/)
+      name: "MSYS"
+      if: (branch = develop AND type IN (cron)) OR (branch = master AND type IN (push, pull_request)) OR (branch =~ /(msys)/) OR (commit_message =~ /(msys)/)
       env:
         - DISABLE_INTERFACES="Python,Java"
       install:
         - echo $PATH
         - export SHELL=cmd
         - source scripts/setup-helics-ci-options.sh
-        - choco install boost-msvc-12
+        - choco install msys2
+        - echo "PATH=$PATH"
+        - echo "C dir contents"
+        - ls /c/
+        - echo "Chocolatey Tools Location"
+        - ls $ChocolateyToolsLocation
       script:
         - mkdir -p build && cd build
         - export CC=gcc
         - export CXX=g++
-        - powershell -command cmake -G \"MinGW Makefiles\" -DBUILD_HELICS_BOOST_TESTS=OFF -DCMAKE_SH=CMAKE_SH-NOTFOUND -DBOOST_INSTALL_PATH=C:/local/boost_1_58_0 '$env:JOB_OPTION_FLAGS' '$env:HELICS_DEPENDENCY_FLAGS' '$env:HELICS_OPTION_FLAGS' -DCMAKE_C_COMPILER=C:/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/bin/gcc.exe -DCMAKE_CXX_COMPILER=C:/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/bin/g++.exe ..
-        - powershell -command cmake --build . --parallel 2
-        - powershell -command ctest -R core-ci-tests
+        - cmake -G "MSYS Makefiles" -DBUILD_HELICS_BOOST_TESTS=OFF -DCMAKE_SH=CMAKE_SH-NOTFOUND -DBOOST_INSTALL_PATH=C:/local/boost_1_58_0 '$env:JOB_OPTION_FLAGS' '$env:HELICS_DEPENDENCY_FLAGS' '$env:HELICS_OPTION_FLAGS' -DCMAKE_C_COMPILER=C:/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/bin/gcc.exe -DCMAKE_CXX_COMPILER=C:/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/bin/g++.exe ..
+        - cmake --build . --parallel 2
+        - ctest -R core-ci-tests
 
     # -----------------------------------------------
     # Daily ZMQ subproject build with new CMake
