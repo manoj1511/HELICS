@@ -150,6 +150,7 @@ jobs:
       if: (branch = develop AND type IN (cron)) OR (branch = master AND type IN (push, pull_request)) OR (branch =~ /(msys)/) OR (commit_message =~ /(msys)/)
       env:
         - DISABLE_INTERFACES="Python,Java"
+        - SHELL_CMD="powershell -command C:\\tools\\msys64\\usr\\bin\\bash -l -c"
       install:
         - echo $PATH
         - source scripts/setup-helics-ci-options.sh
@@ -162,11 +163,7 @@ jobs:
         #- $ChocolateyToolsLocation/msys64/msys2_shell.cmd --no-start -c "pacman --version"
         #- $ChocolateyToolsLocation/msys64/msys2_shell.cmd --no-start -c pacman --version
         #- $ChocolateyToolsLocation/msys64/msys2_shell.cmd --no-start -c "pacman -S boost"
-        - pushd /c/tools/msys64
-        - usr/bin/bash -l -c "pacman --version"
-        - popd
-        - /c/tools/msys64/usr/bin/bash -l -c "pacman --version"
-        - $ChocolateyToolsLocation/msys64/usr/bin/bash -l -c "pacman --version"
+        - $SHELL_CMD "pacman --version"
       script:
         - mkdir -p build && cd build
         - export CC=gcc
