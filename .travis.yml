@@ -158,7 +158,11 @@ jobs:
         - echo "$PATH"
         - ls /c/tools
         - ls $ChocolateyToolsLocation/msys64
-        - ls $ChocolateyToolsLocation/msys64/bin
+        - ls $ChocolateyToolsLocation/msys64/usr/bin
+        - $ChocolateyToolsLocation/msys64/msys2_shell.cmd --no-start -c "pacman --version"
+        - $ChocolateyToolsLocation/msys64/msys2_shell.cmd --no-start -c pacman --version
+        - $ChocolateyToolsLocation/msys64/msys2_shell.cmd --no-start -c "pacman -S boost"
+        - $ChocolateyToolsLocation/msys64/usr/bin/env MSYSTEM=MINGW64 $ChocolateyToolsLocation/msys64/usr/bin/bash -l -c "pacman --version"
       script:
         - mkdir -p build && cd build
         - export CC=gcc
