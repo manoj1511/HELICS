@@ -163,7 +163,7 @@ jobs:
         #- $ChocolateyToolsLocation/msys64/msys2_shell.cmd --no-start -c "pacman --version"
         #- $ChocolateyToolsLocation/msys64/msys2_shell.cmd --no-start -c pacman --version
         #- $ChocolateyToolsLocation/msys64/msys2_shell.cmd --no-start -c "pacman -S boost"
-        - $SHELL_CMD \"pacman -Sy --noconfirm --needed base-devel mingw-w64_x86_64-toolchain mingw-w64-x86_64-cmake mingw-w64-x86_64-boost\"
+        - $SHELL_CMD \"pacman -Sy --noconfirm --needed base-devel mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake mingw-w64-x86_64-boost\"
         - $SHELL_CMD \"cmake --verison\"
       script:
         - mkdir -p build && cd build
