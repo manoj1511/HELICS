@@ -169,7 +169,7 @@ jobs:
         - $SHELL_CMD \"cmake --version\"
       script:
         - mkdir -p build && cd build
-        - $SHELL_CMD \"cmake -G \\"MSYS Makefiles\\" -DBUILD_HELICS_BOOST_TESTS=OFF -DCMAKE_SH=CMAKE_SH-NOTFOUND  \\$JOB_OPTION_FLAGS \\$HELICS_DEPENDENCY_FLAGS \\$HELICS_OPTION_FLAGS ..\"
+        - $SHELL_CMD \'cmake -G \"MSYS Makefiles\" -DBUILD_HELICS_BOOST_TESTS=OFF \$JOB_OPTION_FLAGS \$HELICS_DEPENDENCY_FLAGS \$HELICS_OPTION_FLAGS ..\'
         - $SHELL_CMD \"cmake --build . --parallel 2\"
         - $SHELL_CMD \"ctest -R core-ci-tests\"
 
