@@ -165,16 +165,13 @@ jobs:
         #- $ChocolateyToolsLocation/msys64/msys2_shell.cmd --no-start -c "pacman -S boost"
         - export MSYSTEM=MINGW64
         - $SHELL_CMD \"env\"
-        - $SHELL_CMD \"pacman -Sy --noconfirm --needed base-devel mingw-w64-x86_64-gcc mingw-w64-x86_64-tools-git mingw-w64-x86_64-cmake mingw-w64-x86_64-boost mingw-w64-x86_64-zeromq\"
+        - $SHELL_CMD \"pacman -Sy --noconfirm --needed base-devel mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake mingw-w64-x86_64-boost mingw-w64-x86_64-zeromq\"
         - $SHELL_CMD \"cmake --version\"
-        - $SHELL_CMD \"git --version\"
       script:
         - mkdir -p build && cd build
-        - export CC=gcc
-        - export CXX=g++
-        - cmake -G "MSYS Makefiles" -DBUILD_HELICS_BOOST_TESTS=OFF -DCMAKE_SH=CMAKE_SH-NOTFOUND -DBOOST_INSTALL_PATH=C:/local/boost_1_58_0 '$env:JOB_OPTION_FLAGS' '$env:HELICS_DEPENDENCY_FLAGS' '$env:HELICS_OPTION_FLAGS' -DCMAKE_C_COMPILER=C:/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/bin/gcc.exe -DCMAKE_CXX_COMPILER=C:/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/bin/g++.exe ..
-        - cmake --build . --parallel 2
-        - ctest -R core-ci-tests
+        - $SHELL_CMD \"cmake -G \\\"MSYS Makefiles\\\" -DBUILD_HELICS_BOOST_TESTS=OFF -DCMAKE_SH=CMAKE_SH-NOTFOUND  \\\$JOB_OPTION_FLAGS \\\$HELICS_DEPENDENCY_FLAGS \\\$HELICS_OPTION_FLAGS ..\"
+        - $SHELL_CMD \"cmake --build . --parallel 2\"
+        - $SHELL_CMD \"ctest -R core-ci-tests\"
 
     # -----------------------------------------------
     # Daily ZMQ subproject build with new CMake
